@@ -90,10 +90,10 @@ const Footer = () => {
           <NavLink href="#Skills">Skills</NavLink>
           <NavLink href="#Projects">Projects</NavLink>
           <NavLink href="#Education">Education</NavLink>
-          <NavLink href="#Certifications">Certifications</NavLink>
-          <NavLink href="#Achievements">Achievements</NavLink>
+          <NavLink href="#certifications">Certifications</NavLink>
+          <NavLink href="#achievements">Achievements</NavLink>
           <NavLink href="#Experience">Experience</NavLink>
-          
+          <NavLink href="#Contact">Contact</NavLink>
         </Nav>
         <SocialMediaIcons>
           <SocialMediaIcon href={Bio.facebook} target="display">

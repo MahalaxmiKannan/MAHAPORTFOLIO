@@ -248,6 +248,17 @@ const Certifications = () => {
   const [previewSource, setPreviewSource] = useState("");
   const [previewError, setPreviewError] = useState("");
 
+  useEffect(() => {
+    if (!selectedCert) return undefined;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [selectedCert]);
+
   const isPdfFile = (value = "") => {
     if (typeof value !== "string") return false;
     return value.toLowerCase().split("?")[0].endsWith(".pdf");
