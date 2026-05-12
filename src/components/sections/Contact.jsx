@@ -104,6 +104,37 @@ const ContactButton = styled.input`
   font-weight: 600;
 `;
 
+const InfoPanel = styled.div`
+  width: 95%;
+  max-width: 600px;
+  background-color: rgba(17, 25, 40, 0.83);
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;
+
+const InfoItem = styled.div`
+  font-size: 16px;
+  color: ${({ theme }) => theme.text_primary};
+  font-weight: 500;
+  
+  a {
+    color: ${({ theme }) => theme.primary};
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+`;
+
 const Contact = () => {
   const formRef = useRef(null);
   const [sending, setSending] = useState(false);
@@ -156,8 +187,13 @@ const Contact = () => {
             marginBottom: "40px",
           }}
         >
-          Feel free to reach out to me for any questions or opportunities!
+          Open to internship opportunities, ML collaborations, and interesting problems. I respond to every message within 24 hours.
         </Desc>
+        <InfoPanel>
+          <InfoItem>📧 mahalaxmikannan51@gmail.com</InfoItem>
+          <InfoItem>🔗 <a href="https://linkedin.com/in/mahalaxmi-k-584684319" target="_blank" rel="noopener noreferrer">linkedin.com/in/mahalaxmi-k-584684319</a></InfoItem>
+          <InfoItem>⏰ Available: Mon-Sat, 9 AM - 8 PM IST</InfoItem>
+        </InfoPanel>
         <ContactForm ref={formRef} onSubmit={handleSubmit}>
           <ContactTitle>Email Me 🚀</ContactTitle>
           <input type="hidden" name="to_email" value="mahalaxmikannan51@gmail.com" />

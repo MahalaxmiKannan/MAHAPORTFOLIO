@@ -2,8 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 const Card = styled.div`
-  width: 330px;
-  height: 500px;
+  width: 100%;
+  max-width: 330px;
+  min-height: 560px;
   background-color: ${({ theme }) => theme.card};
   cursor: pointer;
   border-radius: 10px;
@@ -12,7 +13,8 @@ const Card = styled.div`
   padding: 26px 20px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
+  box-sizing: border-box;
   transition: all 0.5s ease-in-out;
   &:hover {
     transform: translateY(-10px);
@@ -26,14 +28,27 @@ const Image = styled.img`
   background-color: ${({ theme }) => theme.white};
   border-radius: 10px;
   box-shadow: 0 0 16px 2px rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;
 `;
 const Tags = styled.div`
   width: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 4px;
+  min-height: 58px;
+  align-content: flex-start;
+`;
+const Tag = styled.span`
+  font-size: 12px;
+  font-weight: 600;
+  color: ${({ theme }) => theme.primary};
+  background: ${({ theme }) => theme.primary + "18"};
+  border: 1px solid ${({ theme }) => theme.primary + "40"};
+  border-radius: 999px;
+  padding: 4px 10px;
+  white-space: nowrap;
 `;
 const Details = styled.div`
   width: 100%;
@@ -41,6 +56,7 @@ const Details = styled.div`
   flex-direction: column;
   gap: 0px;
   padding: 0px 2px;
+  flex: 1;
 `;
 const Title = styled.div`
   font-size: 20px;
@@ -69,6 +85,26 @@ const Description = styled.div`
   margin-top: 8px;
   max-width: 100%;
   white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 92px;
+`;
+
+const Footer = styled.div`
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 2px;
+`;
+
+const Divider = styled.div`
+  width: 100%;
+  height: 1px;
+  background: ${({ theme }) => theme.primary + "30"};
 `;
 
 const Members = styled.div`
@@ -91,26 +127,35 @@ const Button = styled.a`
   text-decoration: none;
   font-weight: 600;
   text-align: center;
+  align-self: center;
+  margin-top: 2px;
 `;
 
 const ProjectCard = ({ project }) => {
   return (
     <Card>
       <Image src={project.image} />
-      <Tags></Tags>
       <Details>
         <Title>{project.title}</Title>
         <Date>{project.date}</Date>
         <Description>{project.description}</Description>
+        <Tags>
+          {project.tags?.map((tag) => (
+            <Tag key={tag}>{tag}</Tag>
+          ))}
+        </Tags>
       </Details>
-      <Members>
-        {project.member?.map((member) => (
-          <Avatar src={member.img} />
-        ))}
-      </Members>
-      <Button href={project.github} target="_blank">
-        View Code
-      </Button>
+      <Footer>
+        <Divider />
+        <Members>
+          {project.member?.map((member) => (
+            <Avatar src={member.img} />
+          ))}
+        </Members>
+        <Button href={project.github} target="_blank" rel="noopener noreferrer">
+          View Code
+        </Button>
+      </Footer>
     </Card>
   );
 };

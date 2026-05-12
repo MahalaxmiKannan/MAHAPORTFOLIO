@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link as LinkR } from "react-router-dom";
-import styled, { useTheme } from "styled-components";
+import styled from "styled-components";
 import { Bio } from "../data/constants";
 import { MenuRounded } from "@mui/icons-material";
 
@@ -103,68 +103,6 @@ const GithubButton = styled.a`
   }
 `;
 
-// LEETCODE STYLED COMPONENTS
-const LeetcodeWrapper = styled.div`
-  position: relative;
-  display: flex;
-  align-items: center;
-  overflow: visible;
-`;
-
-const LeetcodeButton = styled.a`
-  border: 1px solid #ffa116;
-  color: #ffa116;
-  justify-content: center;
-  display: flex;
-  align-items: center;
-  border-radius: 20px;
-  cursor: pointer;
-  padding: 8px 16px;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.6s ease-in-out;
-  text-decoration: none;
-  white-space: nowrap;
-  &:hover {
-    background: #ffa116;
-    color: white;
-  }
-`;
-
-const StatsCard = styled.div`
-  position: absolute;
-  top: 50px;
-  right: 0;
-  width: 200px;
-  background: ${({ theme }) => theme.card_light};
-  border: 1px solid #ffa116;
-  border-radius: 12px;
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5);
-  z-index: 100;
-  pointer-events: ${({ $visible }) => ($visible ? "auto" : "none")};
-  opacity: ${({ $visible }) => ($visible ? 1 : 0)};
-  transform: ${({ $visible }) => ($visible ? "translateY(0)" : "translateY(10px)")};
-  transition: all 0.3s ease;
-
-  ${LeetcodeWrapper}:hover &,
-  ${LeetcodeWrapper}:focus-within & {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-`;
-
-const StatItem = styled.div`
-  display: flex;
-  justify-content: space-between;
-  font-size: 13px;
-  color: ${({ theme }) => theme.text_primary};
-`;
-
 const MobileIcon = styled.div`
   height: 100%;
   display: flex;
@@ -197,76 +135,11 @@ const MobileMenu = styled.ul`
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [leetcodeData, setLeetcodeData] = useState(null);
-  const [statsLoading, setStatsLoading] = useState(true);
-  const [statsError, setStatsError] = useState("");
-  const [showLeetcodeStats, setShowLeetcodeStats] = useState(false);
-  const theme = useTheme();
-
-  // IMPORTANT: Replace with your actual case-sensitive LeetCode username
-  const leetcodeUsername = "Maha_0604"; 
-
-  useEffect(() => {
-    const normalizeStats = (data) => {
-      if (!data || typeof data !== "object") return null;
-
-      const totalSolved = Number(data.totalSolved ?? data.total_solved ?? 0);
-      const easySolved = Number(data.easySolved ?? data.easy_solved ?? 0);
-      const mediumSolved = Number(data.mediumSolved ?? data.medium_solved ?? 0);
-      const hardSolved = Number(data.hardSolved ?? data.hard_solved ?? 0);
-      const ranking = Number(data.ranking ?? data.rank ?? 0);
-
-      if (!Number.isFinite(totalSolved) || totalSolved < 0) return null;
-
-      return {
-        totalSolved,
-        easySolved,
-        mediumSolved,
-        hardSolved,
-        ranking: Number.isFinite(ranking) && ranking > 0 ? ranking : null,
-      };
-    };
-
-    const fetchLeetcodeStats = async () => {
-      setStatsLoading(true);
-      setStatsError("");
-
-      const endpoints = [
-        `https://leetcode-stats-api.vercel.app/${leetcodeUsername}`,
-        `https://alfa-leetcode-api.onrender.com/${leetcodeUsername}`,
-      ];
-
-      for (const endpoint of endpoints) {
-        try {
-          const response = await fetch(endpoint);
-          if (!response.ok) continue;
-          const data = await response.json();
-          const normalized = normalizeStats(data);
-
-          if (normalized) {
-            setLeetcodeData(normalized);
-            setStatsLoading(false);
-            return;
-          }
-        } catch (error) {
-          // Try the next API endpoint silently.
-        }
-      }
-
-      setStatsError("Unable to fetch live stats right now.");
-      setStatsLoading(false);
-    };
-
-    fetchLeetcodeStats();
-    const intervalId = setInterval(fetchLeetcodeStats, 60000);
-
-    return () => clearInterval(intervalId);
-  }, [leetcodeUsername]);
 
   return (
     <Nav>
       <NavbarContainer>
-        <NavLogo to="/">MyPortfolio</NavLogo>
+        <NavLogo to="/">Mahalaxmi K</NavLogo>
 
         <MobileIcon onClick={() => setIsOpen(!isOpen)}>
           <MenuRounded style={{ color: "inherit" }} />
@@ -284,40 +157,8 @@ const Navbar = () => {
 
 
         <ButtonContainer>
-          <LeetcodeWrapper
-            onMouseEnter={() => setShowLeetcodeStats(true)}
-            onMouseLeave={() => setShowLeetcodeStats(false)}
-          >
-            <LeetcodeButton
-              href={`https://leetcode.com/${leetcodeUsername}`}
-              target="_Blank"
-              rel="noopener noreferrer"
-              onFocus={() => setShowLeetcodeStats(true)}
-              onBlur={() => setShowLeetcodeStats(false)}
-            >
-              LeetCode Profile
-            </LeetcodeButton>
-            <StatsCard $visible={showLeetcodeStats}>
-              <h4 style={{ margin: "0 0 4px 0", color: "#ffa116", fontSize: "14px" }}>LeetCode Stats</h4>
-              {statsLoading ? (
-                <div style={{ color: theme.text_secondary, fontSize: "12px" }}>Loading live stats...</div>
-              ) : (
-                <>
-                  <StatItem><span>Solved:</span><span>{leetcodeData?.totalSolved ?? "0"}</span></StatItem>
-                  <StatItem><span>Rank:</span><span>{leetcodeData?.ranking?.toLocaleString() || "N/A"}</span></StatItem>
-                  <StatItem><span style={{ color: "#00b8a3" }}>Easy:</span><span>{leetcodeData?.easySolved ?? 0}</span></StatItem>
-                  <StatItem><span style={{ color: "#ffc01e" }}>Med:</span><span>{leetcodeData?.mediumSolved ?? 0}</span></StatItem>
-                  <StatItem><span style={{ color: "#ef4743" }}>Hard:</span><span>{leetcodeData?.hardSolved ?? 0}</span></StatItem>
-                  {statsError && (
-                    <div style={{ color: "#ff6b6b", fontSize: "11px", marginTop: "4px" }}>{statsError}</div>
-                  )}
-                </>
-              )}
-            </StatsCard>
-          </LeetcodeWrapper>
-
-          <GithubButton href={Bio.github} target="_Blank">
-            Github Profile
+          <GithubButton href={Bio.github} target="_Blank" rel="noopener noreferrer">
+            GitHub
           </GithubButton>
         </ButtonContainer>
 
@@ -331,8 +172,7 @@ const Navbar = () => {
             <NavLink onClick={() => setIsOpen(!isOpen)} href="#Projects">Projects</NavLink>
             <NavLink onClick={() => setIsOpen(!isOpen)} href="#Education">Education</NavLink>
             <div style={{ display: "flex", gap: "10px", width: "100%", marginTop: "10px" }}>
-              <LeetcodeButton href={`https://leetcode.com/${leetcodeUsername}`} target="_Blank">LeetCode</LeetcodeButton>
-              <GithubButton href={Bio.github} target="_Blank">GitHub</GithubButton>
+              <GithubButton href={Bio.github} target="_Blank" rel="noopener noreferrer">GitHub</GithubButton>
             </div>
           </MobileMenu>
         )}

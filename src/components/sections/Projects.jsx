@@ -83,11 +83,13 @@ const Divider = styled.div`
 `;
 
 const CardContainer = styled.div`
-  display: flex;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(330px, 330px));
   justify-content: center;
-  align-items: center;
-  gap: 28px;
-  flex-wrap: wrap;
+  justify-items: center;
+  gap: 32px;
+  align-items: stretch;
 `;
 
 const Projects = () => {
@@ -116,7 +118,7 @@ const Projects = () => {
             active={toggle === "web app"}
             onClick={() => setToggle("web app")}
           >
-            WEB APP"S
+            WEB APPS
           </ToggleButton>
           <Divider />
           <ToggleButton

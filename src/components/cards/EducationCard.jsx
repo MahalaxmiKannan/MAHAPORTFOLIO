@@ -114,6 +114,16 @@ const EducationCard = ({ education }) => {
       <Description>
         {education?.desc && <Span>{education.desc}</Span>}
       </Description>
+      {education?.keyCourses && (
+        <Description style={{ marginBottom: "5px", fontSize: "14px" }}>
+          <b>Key courses:</b> {education.keyCourses}
+        </Description>
+      )}
+      {education?.achievement && (
+        <Description style={{ marginBottom: "5px", fontSize: "14px" }}>
+          <b>Achievement:</b> {education.achievement}
+        </Description>
+      )}
     </VerticalTimelineElement>
   );
 };

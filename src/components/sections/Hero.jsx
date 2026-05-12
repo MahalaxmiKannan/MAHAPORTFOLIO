@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useEffect, useState } from "react";
+import styled, { keyframes } from "styled-components";
 import { Bio } from "../../data/constants";
 import Typewriter from "typewriter-effect";
 import HeroImg from "../../images/HeroImage.jpg";
@@ -12,6 +12,40 @@ import {
   headTextAnimation,
 } from "../../utils/motion";
 import StarCanvas from "../canvas/Stars";
+
+const pulse = keyframes`
+  0% { opacity: 1; }
+  50% { opacity: 0.6; }
+  100% { opacity: 1; }
+`;
+
+const AvailabilityBadge = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background-color: rgba(168, 85, 247, 0.12);
+  border: 1px solid ${({ theme }) => theme.primary};
+  border-radius: 50px;
+  color: ${({ theme }) => theme.text_primary};
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 24px;
+  
+  @media (max-width: 960px) {
+    font-size: 13px;
+    padding: 6px 12px;
+    margin-bottom: 16px;
+  }
+`;
+
+const PulseDot = styled.div`
+  width: 8px;
+  height: 8px;
+  background-color: ${({ theme }) => theme.primary};
+  border-radius: 50%;
+  animation: ${pulse} 2s infinite ease-in-out;
+`;
 
 const HeroContainer = styled.div`
   display: flex;
@@ -130,16 +164,69 @@ const SubTitle = styled.div`
   }
 `;
 
+const StatsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 34px;
+
+  @media (max-width: 960px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  @media (max-width: 640px) {
+    gap: 10px;
+    margin-bottom: 26px;
+  }
+`;
+
+const StatCard = styled.div`
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: rgba(17, 25, 40, 0.72);
+  border: 1px solid rgba(168, 85, 247, 0.18);
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.22);
+  backdrop-filter: blur(10px);
+  text-align: center;
+
+  @media (max-width: 640px) {
+    padding: 14px 12px;
+  }
+`;
+
+const StatValue = styled.div`
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
+  color: ${({ theme }) => theme.primary};
+
+  @media (max-width: 640px) {
+    font-size: 24px;
+  }
+`;
+
+const StatLabel = styled.div`
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: ${({ theme }) => theme.text_secondary};
+
+  @media (max-width: 640px) {
+    font-size: 13px;
+  }
+`;
+
 const ResumeButton = styled.a`
   -webkit-appearance: button;
   -moz-appearance: button;
   appearance: button;
   text-decoration: none;
 
-  width: 95%;
-  max-width: 300px;
+  width: auto;
+  min-width: 180px;
   text-align: center;
-  padding: 16px 0;
+  padding: 16px 28px;
 
   background: hsla(271, 100%, 50%, 1);
   background: linear-gradient(
@@ -171,10 +258,83 @@ const ResumeButton = styled.a`
     
     
     @media (max-width: 640px) {
-        padding: 12px 0;
+        padding: 12px 22px;
         font-size: 18px;
     } 
     color: white;
+`;
+
+const CTAGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: nowrap;
+
+  @media (max-width: 960px) {
+    justify-content: center;
+  }
+`;
+
+const ContactAction = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const ContactCta = styled.a`
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  appearance: button;
+  text-decoration: none;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: 180px;
+  text-align: center;
+  padding: 16px 28px;
+
+  background: transparent;
+  border: 1px solid ${({ theme }) => theme.primary}80;
+  border-radius: 50px;
+  color: ${({ theme }) => theme.text_primary};
+  font-weight: 600;
+  font-size: 20px;
+  box-shadow: 0 0 0 rgba(16, 185, 129, 0);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease,
+    background-color 0.18s ease;
+  will-change: transform;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.primary}14;
+    border-color: ${({ theme }) => theme.primary};
+    box-shadow: 0 12px 28px ${({ theme }) => theme.primary}26;
+  }
+
+  @media (max-width: 640px) {
+    padding: 12px 22px;
+    font-size: 18px;
+  }
+`;
+
+const ContactEta = styled.span`
+  font-size: 14px;
+  font-weight: 500;
+  color: ${({ theme }) => theme.text_secondary};
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  &::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: ${({ theme }) => theme.primary};
+    box-shadow: 0 0 0 4px ${({ theme }) => theme.primary}1f;
+  }
 `;
 
 const Img = styled.img`
@@ -216,6 +376,50 @@ const HeroBg = styled.div`
 `;
 
 const Hero = () => {
+  const stats = [
+    { label: "Internships", target: 3, suffix: "" },
+    { label: "Hackathons", target: 3, suffix: "" },
+    { label: "LeetCode", target: 200, suffix: "+" },
+    { label: "CGPA", target: 8.63, suffix: "" },
+  ];
+  const [statValues, setStatValues] = useState(stats.map(() => 0));
+  const [contactOffset, setContactOffset] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const duration = 1500;
+    const startTime = performance.now();
+    let animationFrameId;
+
+    const tick = (currentTime) => {
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      setStatValues(
+        stats.map((stat) => {
+          const value = stat.target * progress;
+          return stat.label === "CGPA" ? Number(value.toFixed(2)) : Math.floor(value);
+        })
+      );
+
+      if (progress < 1) {
+        animationFrameId = requestAnimationFrame(tick);
+      }
+    };
+
+    animationFrameId = requestAnimationFrame(tick);
+
+    return () => cancelAnimationFrame(animationFrameId);
+  }, []);
+
+  const handleContactMove = (event) => {
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 12;
+    const y = ((event.clientY - bounds.top) / bounds.height - 0.5) * 8;
+    setContactOffset({ x, y });
+  };
+
+  const resetContactMove = () => {
+    setContactOffset({ x: 0, y: 0 });
+  };
+
   return (
     <div id="About">
       <HeroContainer>
@@ -228,6 +432,10 @@ const Hero = () => {
           <HeroInnerContainer>
             <HeroLeftContainer>
               <motion.div {...headTextAnimation}>
+                <AvailabilityBadge>
+                  <PulseDot />
+                  Open to internships — Coimbatore & Remote — Available immediately
+                </AvailabilityBadge>
                 <Title>
                   Hi, I am <br /> {Bio.name}
                 </Title>
@@ -249,9 +457,39 @@ const Hero = () => {
                 <SubTitle>{Bio.description}</SubTitle>
               </motion.div>
 
-              <ResumeButton href={Bio.resume} target="_blank" rel="noopener noreferrer">
-                Check Resume
-              </ResumeButton>
+              <motion.div {...headContentAnimation}>
+                <StatsGrid>
+                  {stats.map((stat, index) => (
+                    <StatCard key={stat.label}>
+                      <StatValue>
+                        {stat.label === "CGPA"
+                          ? statValues[index].toFixed(2)
+                          : statValues[index]}
+                        {stat.suffix}
+                      </StatValue>
+                      <StatLabel>{stat.label}</StatLabel>
+                    </StatCard>
+                  ))}
+                </StatsGrid>
+              </motion.div>
+
+              <CTAGroup>
+                <ResumeButton href={Bio.resume} target="_blank" rel="noopener noreferrer">
+                  Check Resume
+                </ResumeButton>
+                <ContactAction>
+                  <ContactCta
+                    href="#Contact"
+                    onMouseMove={handleContactMove}
+                    onMouseLeave={resetContactMove}
+                    style={{
+                      transform: `translate3d(${contactOffset.x}px, ${contactOffset.y}px, 0)`,
+                    }}
+                  >
+                    Contact Me →
+                  </ContactCta>
+                </ContactAction>
+              </CTAGroup>
             </HeroLeftContainer>
             <HeroRightContainer>
               <motion.div {...headContentAnimation}>

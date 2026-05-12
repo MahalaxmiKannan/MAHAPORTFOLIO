@@ -13,12 +13,13 @@ import servicenow from "../images/sn.jpg";
 import django from "../images/django.png";
 import pbi from "../images/pbi.jpg";
 import mongodb from "../images/mdb.jpg";
+import skcet from "../images/skcet.jpeg";
 
 export const Bio = {
   name: "Mahalaxmi Kannan",
   roles: [
-    "Aspiring AI Engineer",
-    "MERN Stack Developer",
+    "Aspiring AI/ML Engineer",
+    "Full Stack Developer",
     "Programmer",
     "Problem Solver",
   ],
@@ -174,13 +175,13 @@ export const experiences = [
     role: "Artificial Intelligence  Intern",
     company: "CodTech IT Company",
     date: "Feb 2025 - Mar 2025",
-    desc: "Enhanced user experiences on Neurobit PSG & Hybrid, Portals by resolving bugs & reduced load time by 40%. Built Neurobit Analytics portal using React Js with seamless interaction of REST APIs using AXIOS optimized with React Query. Refactored previous code to TypeScript, updated with new dependency and integrated Vite with Jest for Unit Testing.",
+    desc: "• Engineered a deep learning speech recognition model in Python + TensorFlow achieving 90%+ transcription accuracy\n• Built a Transformer-based NLP text summarizer reducing content length by 60% while retaining semantic context\n• Delivered 2 production-ready AI models within a 2-month remote internship timeline",
     skills: [
-      "Engineering",
-      "Artificial Intelligence",
-      "Machine Learning",
-      "Problem Solving",
-      "Data Science",
+      "Python",
+      "TensorFlow",
+      "NLP",
+      "Transformers",
+      "Deep Learning",
     ],
     doc: "https://yt3.googleusercontent.com/l7Pfr47b8sGLoa0m13On6sHt9STatMi3kuO0k67HxxmkqkvoDHerkU_vqmO0cs9jvFjPEqG3Fg=s900-c-k-c0x00ffffff-no-rj",
   },
@@ -190,14 +191,31 @@ export const experiences = [
     role: "Machine Learning Intern",
     company: "Alfido Tech Pvt. Ltd.",
     date: "May 2025 - June 2025",
-    desc: "Built Flipr Connect Platforms using React Js integrated GraphQL with AXIOS, created High level Design and Figma design. Built Backend with GraphQL and Node JS and connected with MongoDb - Reducing API calls by 20%. Dockerized and automated with Kubernetes & Jenkins CI/CD deployed in AWS-EC2 added Prometheus & Grafana for monitoring.",
+    desc: "• Built supervised ML models (Logistic Regression, SVM, Random Forest) for Iris classification and house price prediction on 10,000+ record datasets — 95% accuracy\n• Achieved 15% efficiency gain through feature engineering and hyperparameter tuning\n• Presented model results and insights to technical team leads",
     skills: [
-      "Artificial Intelligence",
+      "Python",
+      "Scikit-learn",
+      "Pandas",
       "Machine Learning",
-      "Research Skills",
-      "Analytical Skills",
+      "Data Analysis",
     ],
     doc: "https://www.alfidotech.com/logo.png",
+  },
+  {
+    id: 2,
+    img: "https://play-lh.googleusercontent.com/snigMTGEN_kGsK71jRtGkAMbjFSwWg7lfMa5QP9kzWR69ZuodJOdePQP0E1crUi8e6ryIj66fQ8TxMSZrL9X0NQ",
+    role: "AI Development Trainee",
+    company: "Mirai School of Technology",
+    date: "Jan 2026 - Feb 2026",
+    desc: "• Built and deployed end-to-end AI applications through a 6-week intensive programme\n• Worked with LLM-based development tools, prompt engineering, and agentic AI workflows\n• Hands-on experience with Streamlit, Cursor AI, and modern AI product development practices",
+    skills: [
+      "Python",
+      "LLMs",
+      "Prompt Engineering",
+      "Streamlit",
+      "Cursor AI",
+    ],
+    doc: "https://mirai.school/logo.png",
   },
 ];
 
@@ -208,7 +226,7 @@ export const education = [
     school: "The Ashok Leyland School, Hosur, Tamil Nadu",
     date: "June 2010 - May 2024",
     grade: "98 % in 10th, 95% in 12th",
-    desc: "I completed my 1st to 12th standard at The Ashok Leyland School and also has become the top student in my class.",
+    desc: "Completed grades 1-12 at The Ashok Leyland School, Hosur. Graduated as top student in class — 98% in 10th, 95% in 12th.",
     degree: "CBSE(XII), Science with Computer",
   },
   {
@@ -216,8 +234,10 @@ export const education = [
     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDyDdFVTjUsQDS0s55Q4HGmNlsf7EkLFOyWg&s",
     school: "Sri Krishna College Of Engineering And Technology, Coimbatore, Tamil Nadu",
     date: "Aug 2024 - May 2028",
-    grade: "8.51 CGPA",
+    grade: "8.63 CGPA",
     desc: "I am pursuing my B.Tech degree in this institution. I have successfully completed my 2nd year of engineering. Looking forward.",
+    keyCourses: "Machine Learning, Data Analytics, Data Structures, DBMS, Computer Networks",
+    achievement: "Top performer among 120+ peers in AI & Data Science department",
     degree: "Bachelor of Technology - BTech, Artificial Intelligence And Data Science",
   },
 ];
@@ -230,7 +250,7 @@ export const projects = [
     description:
       "An intelligent browser extension that provides contextual hints, explanations, and guidance while solving LeetCode problems.",
     image: LCI,
-    tags: ["JavaScript", "Chrome Extension", "APIs", "Algorithms", "React", "HTML", "CSS"],
+    tags: ["JavaScript", "Chrome Extension API", "Browser Extension"],
     category: "DATA",
     github: "https://github.com/MahalaxmiKannan/LEETCODE-TUTOR",
     webapp: "https://github.com/MahalaxmiKannan/LEETCODE-TUTOR",
@@ -243,7 +263,7 @@ export const projects = [
       "A full-stack web application that enables users to manage resort rooms using a React frontend and Spring Boot backend.",
     image:
       "https://roomraccoon.com/wp-content/uploads/2023/07/HMS-Blog-hero.jpg",
-      tags: ["React", "Spring Boot", "Java", "REST API", "MySQL", "JWT", "Full Stack"],
+    tags: ["React", "Spring Boot", "Java", "MySQL", "REST API"],
     category: "WEB APPS",
     github: "https://github.com/MahalaxmiKannan/RESORT-ROOM-BOOKING-SYSTEM",
     webapp: "https://github.com/MahalaxmiKannan/RESORT-ROOM-BOOKING-SYSTEM",
@@ -255,7 +275,7 @@ export const projects = [
     description:
       "A machine learning system that predicts salary ranges based on skills, experience, and role using predictive analytics.",
     image: NPS,
-    tags: ["Python", "Machine Learning", "Scikit-learn", "Pandas", "NumPy", "Regression"],
+    tags: ["Python", "Scikit-learn", "Random Forest", "Pandas", "Streamlit"],
     category: "AI/ML",
     github: "https://github.com/MahalaxmiKannan/NEXUSPAY_SALARY_PREDICTION",
     webapp: "https://github.com/MahalaxmiKannan/NEXUSPAY_SALARY_PREDICTION",
@@ -267,7 +287,7 @@ export const projects = [
     description:
       "A data-driven platform that analyzes activities and estimates carbon emissions to promote sustainable decision-making.",
     image: CO2,
-    tags: ["Python", "Data Analysis", "Pandas", "Visualization", "Machine Learning", "Sustainability"],
+    tags: ["React", "Django", "MongoDB", "Data Analytics"],
     category: "DATA",
     github: "https://github.com/MahalaxmiKannan/SAKTHI_CARBON-TRACKER",
     webapp: "https://github.com/MahalaxmiKannan/SAKTHI_CARBON-TRACKER",
@@ -279,7 +299,7 @@ export const projects = [
     description:
       "An NLP-based application that automatically generates concise summaries from long-form text using AI models.",
     image: TST,
-    tags: ["Python", "Keras", "TensorFlow", "VGG16", "Pickle", "React"],
+    tags: ["Python", "HuggingFace Transformers", "NLP", "Streamlit"],
     category: "AI/ML",
     github: "https://github.com/MahalaxmiKannan/TEXT-SUMMARIZATION-TOOL",
     webapp: "https://github.com/MahalaxmiKannan/TEXT-SUMMARIZATION-TOOL ",
@@ -291,7 +311,7 @@ export const projects = [
     description:
       "A responsive fan-centric web platform showcasing episodes, characters, and interactive content for the Stranger Things series.",
     image: ST,
-      tags: ["React", "JavaScript", "HTML", "CSS", "UI/UX", "Responsive Design"],
+    tags: ["Html", "Css", "Javascript"],
     category: "WEB APPS",
     github: "https://github.com/MahalaxmiKannan/STRANGER-THINGS---FAN-HUB",
     webapp: "https://github.com/MahalaxmiKannan/STRANGER-THINGS---FAN-HUB",
@@ -383,4 +403,12 @@ export const achievements = [
     desc: "First prize at Masala Coding (Thiran), Sri Eshwar College of Engineering; outpaced competitors in high-pressure MCQ and algorithmic rounds to secure a ₹3000 cash award.",
     image: mct, // Replace with your team photo
   },
+  {
+    id: 4,
+    title: "Top Academic Performer — SKCET",
+    result: "CGPA : 8.63",
+    date: "2024 - present",
+    desc: "Maintaining top academic performance among 120+ peers in AI & Data Science department. CGPA: 8.63.",
+    image: skcet,
+  }
 ];
