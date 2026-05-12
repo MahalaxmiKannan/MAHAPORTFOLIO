@@ -318,25 +318,6 @@ const ContactCta = styled.a`
   }
 `;
 
-const ContactEta = styled.span`
-  font-size: 14px;
-  font-weight: 500;
-  color: ${({ theme }) => theme.text_secondary};
-  white-space: nowrap;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-
-  &::before {
-    content: "";
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: ${({ theme }) => theme.primary};
-    box-shadow: 0 0 0 4px ${({ theme }) => theme.primary}1f;
-  }
-`;
-
 const Img = styled.img`
   border-radius: 50%;
   width: 100%;
@@ -375,13 +356,15 @@ const HeroBg = styled.div`
   }
 `;
 
+const HERO_STATS = [
+  { label: "Internships", target: 3, suffix: "" },
+  { label: "Hackathons", target: 3, suffix: "" },
+  { label: "LeetCode", target: 200, suffix: "+" },
+  { label: "CGPA", target: 8.63, suffix: "" },
+];
+
 const Hero = () => {
-  const stats = [
-    { label: "Internships", target: 3, suffix: "" },
-    { label: "Hackathons", target: 3, suffix: "" },
-    { label: "LeetCode", target: 200, suffix: "+" },
-    { label: "CGPA", target: 8.63, suffix: "" },
-  ];
+  const stats = HERO_STATS;
   const [statValues, setStatValues] = useState(stats.map(() => 0));
   const [contactOffset, setContactOffset] = useState({ x: 0, y: 0 });
 
@@ -407,7 +390,7 @@ const Hero = () => {
     animationFrameId = requestAnimationFrame(tick);
 
     return () => cancelAnimationFrame(animationFrameId);
-  }, []);
+  }, [stats]);
 
   const handleContactMove = (event) => {
     const bounds = event.currentTarget.getBoundingClientRect();
